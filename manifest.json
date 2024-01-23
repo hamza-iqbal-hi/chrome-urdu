@@ -7,7 +7,12 @@
     "default_icon": "src/assets/images/icon-16.png",
     "default_popup": "src/popup/popup.html"
   },
-  "permissions": ["activeTab"],
+  "icons": {
+    "16": "src/assets/images/icon-16.png",
+    "48": "src/assets/images/icon-48.png",
+    "128": "src/assets/images/icon-128.png"
+  },
+  "permissions": ["activeTab", "storage"],
   "web_accessible_resources": [
     {
       "resources": ["fonts/*"],
@@ -18,7 +23,11 @@
     {
       "matches": ["<all_urls>"],
       "js": ["src/scripts/content.js"],
-      "run_at": "document_end"
+      "run_at": "document_end",
+      "fonts": ["gandhara-suls-regular.ttf", "nastaleeq-regular"]
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "src/scripts/background.js"
+  }
 }
