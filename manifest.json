@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "chrome-urdu",
+  "description": "Change the font of Arabic/Urdu text on web pages",
+  "version": "1.0",
+  "action": {
+    "default_icon": "src/assets/images/icon-16.png",
+    "default_popup": "src/popup/popup.html"
+  },
+  "permissions": ["activeTab"],
+  "web_accessible_resources": [
+    {
+      "resources": ["fonts/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/scripts/content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
