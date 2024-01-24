@@ -10,5 +10,17 @@ document
         message: "start",
       });
     });
-    chrome.runtime.sendMessage({ action: "cu-save-font", font: selectedFont });
+    chrome.runtime
+      .sendMessage({ action: "cu-save-font", font: selectedFont })
+      .then(() => {});
   });
+
+const getSelectedFont = () => {
+  return chrome.runtime.sendMessage({ action: "cu-get-font" }, (response) => {
+    if (response && response.font)
+      document.getElementById("fontSelector").value = response.font;
+  });
+};
+document.addEventListener("DOMContentLoaded", function () {
+  getSelectedFont();
+});

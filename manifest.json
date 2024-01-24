@@ -15,18 +15,10 @@
   },
 
   "permissions": ["activeTab", "storage"],
-  "web_accessible_resources": [
-    {
-      "resources": ["fonts/*"],
-      "matches": ["<all_urls>"]
-    }
-  ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["src/scripts/content.js"],
-      "run_at": "document_end",
-      "fonts": ["gandhara-suls-regular.ttf", "nastaleeq-regular"]
+      "js": ["src/scripts/content.js"]
     }
   ],
   "background": {

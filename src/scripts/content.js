@@ -1,26 +1,40 @@
 const defaultFont = "gulzar";
 let fontToApply = defaultFont;
 
-const getSavedFont = () => {
+const getActiveFont = () => {
   return chrome.runtime.sendMessage({ action: "cu-get-font" }, (response) => {
-    if (response && response.font) updateFontToApply(response.font);
+    if (response && response.font) setFontToApply(response.font);
   });
 };
+const hasUrduArabicText = (elem) => {
+  var arabicUrduScriptRegex = /[\u0600-\u06FF\u0750-\u077F]/;
+  var textContent = elem.textContent || elem.innerText;
+  return arabicUrduScriptRegex.test(textContent);
+};
+const getElementsWithArabicOrUrduText = () => {
+  var allElements = document.querySelectorAll("*");
+  var elementsWithArabicOrUrduText = [];
 
+  for (var i = 0; i < allElements.length; i++) {
+    if (hasUrduArabicText(allElements[i])) {
+      elementsWithArabicOrUrduText.push(allElements[i]);
+    }
+  }
+  return elementsWithArabicOrUrduText;
+};
 const changeFontForWebpage = () => {
-  const urduElements = document.querySelectorAll(":lang(ur)");
-  console.log(fontToApply);
+  const urduElements = getElementsWithArabicOrUrduText();
   urduElements.forEach((element) => {
     element.style.fontFamily = fontToApply;
   });
 };
 
-const updateFontToApply = (newFontFamily) => {
+const setFontToApply = (newFontFamily) => {
   fontToApply = newFontFamily;
   changeFontForWebpage();
 };
 
-const injectFonts = () => {
+const injectFontsIntoWebpage = () => {
   const fontStylesheet = document.createElement("style");
   fontStylesheet.rel = "stylesheet";
   fontStylesheet.textContent = `
@@ -73,7 +87,7 @@ const injectFonts = () => {
   document.head.appendChild(fontStylesheet);
 };
 
-const callback = (mutationsList, observer) => {
+const onWebPageUpdate = (mutationsList, observer) => {
   for (const mutation of mutationsList) {
     if (mutation.type === "childList") {
       changeFontForWebpage();
@@ -81,17 +95,20 @@ const callback = (mutationsList, observer) => {
   }
 };
 
+//request font change when user changes font
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log(request, request.action === "changeFont", request.font);
   if (request.action === "changeFont") {
     const selectedFont = request.font;
-    updateFontToApply(selectedFont);
+    setFontToApply(selectedFont);
   }
 });
 
+// adding observer to observe for changes in the webpage
 const config = { attributes: true, childList: true, subtree: true };
-
-const observer = new MutationObserver(callback);
+const observer = new MutationObserver(onWebPageUpdate);
 observer.observe(document.body, config);
-injectFonts();
-getSavedFont();
+
+//inject fonts into the webpage to be used
+injectFontsIntoWebpage();
+//get activeFont from storage
+getActiveFont();
