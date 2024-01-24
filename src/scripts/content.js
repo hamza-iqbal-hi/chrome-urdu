@@ -15,7 +15,6 @@ const injectFonts = () => {
   const fontStylesheet = document.createElement("style");
   fontStylesheet.rel = "stylesheet";
   fontStylesheet.textContent = `
-   
     @font-face {
         font-family: "sameer-mosan";
         src: url(https://github.com/hamza-iqbal-hi/chrome-urdu/blob/main/fonts/sameer-mosan.ttf?raw=true) format("truetype");
