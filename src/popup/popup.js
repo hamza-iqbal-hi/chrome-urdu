@@ -10,4 +10,5 @@ document
         message: "start",
       });
     });
+    chrome.runtime.sendMessage({ action: "cu-save-font", font: selectedFont });
   });

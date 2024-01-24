@@ -1,16 +1,25 @@
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === "changeFont") {
-    const selectedFont = request.font || "Arial, sans-serif";
-    changeArabicFont(selectedFont);
-  }
-});
+const defaultFont = "gulzar";
+let fontToApply = defaultFont;
 
-function changeArabicFont(selectedFont) {
-  const urduElements = document.querySelectorAll(":lang(ur)");
-  urduElements.forEach((element) => {
-    element.style.fontFamily = selectedFont;
+const getSavedFont = () => {
+  return chrome.runtime.sendMessage({ action: "cu-get-font" }, (response) => {
+    if (response && response.font) updateFontToApply(response.font);
   });
-}
+};
+
+const changeFontForWebpage = () => {
+  const urduElements = document.querySelectorAll(":lang(ur)");
+  console.log(fontToApply);
+  urduElements.forEach((element) => {
+    element.style.fontFamily = fontToApply;
+  });
+};
+
+const updateFontToApply = (newFontFamily) => {
+  fontToApply = newFontFamily;
+  changeFontForWebpage();
+};
+
 const injectFonts = () => {
   const fontStylesheet = document.createElement("style");
   fontStylesheet.rel = "stylesheet";
@@ -56,19 +65,33 @@ const injectFonts = () => {
       font-style: normal;
       font-weight: 400;
       unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
+    }
+    body{
+      font-family: ${defaultFont};
     }`;
 
   document.head.appendChild(fontStylesheet);
 };
-const config = { attributes: true, childList: true, subtree: true };
-const callback = function (mutationsList, observer) {
+
+const callback = (mutationsList, observer) => {
   for (const mutation of mutationsList) {
     if (mutation.type === "childList") {
-      changeArabicFont("gulzar");
+      changeFontForWebpage();
     }
   }
 };
 
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  console.log(request, request.action === "changeFont", request.font);
+  if (request.action === "changeFont") {
+    const selectedFont = request.font;
+    updateFontToApply(selectedFont);
+  }
+});
+
+const config = { attributes: true, childList: true, subtree: true };
+
 const observer = new MutationObserver(callback);
 observer.observe(document.body, config);
 injectFonts();
+getSavedFont();
