@@ -8,7 +8,8 @@ const getActiveFont = () => {
 };
 const hasUrduArabicText = (elem) => {
   var arabicUrduScriptRegex = /[\u0600-\u06FF\u0750-\u077F]/;
-  var textContent = elem.textContent || elem.innerText;
+  var textContent = elem.textContent;
+
   return arabicUrduScriptRegex.test(textContent);
 };
 const getElementsWithArabicOrUrduText = () => {
@@ -79,9 +80,6 @@ const injectFontsIntoWebpage = () => {
       font-style: normal;
       font-weight: 400;
       unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
-    }
-    body{
-      font-family: ${defaultFont};
     }`;
 
   document.head.appendChild(fontStylesheet);
