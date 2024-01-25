@@ -11,7 +11,7 @@ const injectFontsIntoWebpage = () => {
     "https://github.com/hamza-iqbal-hi/chrome-urdu/blob/main/fonts";
   const fontFaceStyles = fontFamilies.map((font) => {
     return `@font-face {
-        font-family: "al-qalam";
+        font-family: "${font}";
         src: url(${baseURL}/${font}.ttf?raw=true) format("truetype");
         font-style: normal;
         font-weight: 400;
