@@ -21,6 +21,12 @@ const getSelectedFont = () => {
       document.getElementById("fontSelector").value = response.font;
   });
 };
+document.getElementById("fontSelector").addEventListener("change", function () {
+  const fontSelector = document.getElementById("fontSelector");
+  const selectedFont = fontSelector.options[fontSelector.selectedIndex].value;
+  document.getElementById("selectedFont").style.fontFamily = selectedFont;
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   getSelectedFont();
 });
