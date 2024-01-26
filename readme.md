@@ -35,7 +35,8 @@ This project is licensed under the MIT License.
 
 ## Contributing
 
-- Feel free to contribute to the project. Follow the standard GitHub flow:
+#### Feel free to contribute to the project. Follow the standard GitHub flow:
+
 - Fork the repository.
 - Create a new branch (git checkout -b feature/fooBar).
 - Make your changes.
