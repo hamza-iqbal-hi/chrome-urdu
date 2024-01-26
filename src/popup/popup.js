@@ -19,6 +19,7 @@ const getSelectedFont = () => {
   return chrome.runtime.sendMessage({ action: "cu-get-font" }, (response) => {
     if (response && response.font)
       document.getElementById("fontSelector").value = response.font;
+    document.getElementById("selectedFont").style.fontFamily = response.font;
   });
 };
 document.getElementById("fontSelector").addEventListener("change", function () {
