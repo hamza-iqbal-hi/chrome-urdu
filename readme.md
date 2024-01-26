@@ -11,7 +11,7 @@ Change the font of Urdu text on web pages using this Chrome extension.
 
 1. Clone the repository or download the ZIP file.
    ```bash
-   git clone https://github.com/your-username/urdu-font-changer-extension.git
+   git clone https://github.com/hamza-iqbal-hi/chrome-urdu.git
    ```
 2. Open Google Chrome and go to chrome://extensions/.
 
