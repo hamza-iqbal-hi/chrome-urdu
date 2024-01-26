@@ -35,16 +35,10 @@ This project is licensed under the MIT License.
 
 ## Contributing
 
-Feel free to contribute to the project. Follow the standard GitHub flow:
-
-Fork the repository.
-
-Create a new branch (git checkout -b feature/fooBar).
-
-Make your changes.
-
-Commit your changes (git commit -am 'Add some fooBar').
-
-Push to the branch (git push origin feature/fooBar).
-
-Create a new Pull Request.
+- Feel free to contribute to the project. Follow the standard GitHub flow:
+- Fork the repository.
+- Create a new branch (git checkout -b feature/fooBar).
+- Make your changes.
+- Commit your changes (git commit -am 'Add some fooBar').
+- Push to the branch (git push origin feature/fooBar).
+- Create a new Pull Request.
