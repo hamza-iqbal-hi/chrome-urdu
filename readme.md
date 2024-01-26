@@ -21,7 +21,7 @@ Change the font of Urdu text on web pages using this Chrome extension.
 
 The extension icon will appear in your browser toolbar.
 
-Usage
+###Usage
 
 - Click on the extension icon to open the popup.
 
