@@ -7,16 +7,15 @@ const getActiveFont = () => {
   });
 };
 const hasUrduArabicText = (elem) => {
-  var arabicUrduScriptRegex = /[\u0600-\u06FF\u0750-\u077F]/;
-  var textContent = elem.textContent;
-
+  const arabicUrduScriptRegex = /[\u0600-\u06FF\u0750-\u077F]/;
+  const textContent = elem.textContent;
   return arabicUrduScriptRegex.test(textContent);
 };
 const getElementsWithArabicOrUrduText = () => {
-  var allElements = document.querySelectorAll("*");
-  var elementsWithArabicOrUrduText = [];
+  const allElements = document.querySelectorAll("*");
+  const elementsWithArabicOrUrduText = [];
 
-  for (var i = 0; i < allElements.length; i++) {
+  for (let i = 0; i < allElements.length; i++) {
     if (hasUrduArabicText(allElements[i])) {
       elementsWithArabicOrUrduText.push(allElements[i]);
     }
