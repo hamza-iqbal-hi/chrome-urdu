@@ -6,26 +6,40 @@ const getActiveFont = () => {
     if (response && response.font) setFontToApply(response.font);
   });
 };
-const hasUrduArabicText = (elem) => {
-  const arabicUrduScriptRegex = /[\u0600-\u06FF\u0750-\u077F]/;
-  const textContent = elem.textContent;
-  return arabicUrduScriptRegex.test(textContent);
-};
+
 const getElementsWithArabicOrUrduText = () => {
-  const allElements = document.querySelectorAll("*");
   const elementsWithArabicOrUrduText = [];
 
-  for (let i = 0; i < allElements.length; i++) {
-    if (hasUrduArabicText(allElements[i])) {
-      elementsWithArabicOrUrduText.push(allElements[i]);
+  const checkUrduScript = (elem) => {
+    const urduRegex = /[\u0600-\u06FF]/;
+    if (urduRegex.test(elem.textContent)) {
+      elementsWithArabicOrUrduText.push(elem);
     }
+  };
+
+  var treeWalker = document.createTreeWalker(
+    document.body,
+    NodeFilter.SHOW_TEXT, // Show only text nodes
+    null,
+    false
+  );
+
+  // Collect text nodes in an array
+  var textNodes = [];
+  while (treeWalker.nextNode()) {
+    textNodes.push(treeWalker.currentNode);
   }
+
+  for (let i = 0; i < textNodes.length; i++) {
+    checkUrduScript(textNodes[i]);
+  }
+
   return elementsWithArabicOrUrduText;
 };
 const changeFontForWebpage = () => {
   const urduElements = getElementsWithArabicOrUrduText();
   urduElements.forEach((element) => {
-    element.style.fontFamily = fontToApply;
+    element.parentNode.style.fontFamily = fontToApply;
   });
 };
 
