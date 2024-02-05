@@ -1,12 +1,4 @@
-const injectFontsIntoWebpage = () => {
-  const fontFamilies = [
-    "al-qalam",
-    "gandhara-suls",
-    "gulzar",
-    "nastaleeq-kasheeda",
-    "nastaleeq",
-    "sameer-mosan",
-  ];
+const injectFontsIntoWebpage = (fontFamilies) => {
   const baseURL =
     "https://github.com/hamza-iqbal-hi/chrome-urdu/blob/main/fonts";
   const fontFaceStyles = fontFamilies.map((font) => {
@@ -23,5 +15,15 @@ const injectFontsIntoWebpage = () => {
   fontStylesheet.textContent = fontFaceStyles.join("\n");
   document.head.appendChild(fontStylesheet);
 };
+const getAllFonts = () => {
+  return [
+    "al-qalam",
+    "gandhara-suls",
+    "gulzar",
+    "nastaleeq-kasheeda",
+    "nastaleeq",
+    "sameer-mosan",
+  ];
+};
 
-injectFontsIntoWebpage();
+injectFontsIntoWebpage(getAllFonts());

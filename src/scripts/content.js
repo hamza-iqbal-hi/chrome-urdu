@@ -39,7 +39,8 @@ const getElementsWithArabicOrUrduText = () => {
 const changeFontForWebpage = () => {
   const urduElements = getElementsWithArabicOrUrduText();
   urduElements.forEach((element) => {
-    element.parentNode.style.fontFamily = fontToApply;
+    if (element.parentNode && element.parentNode.style)
+      element.parentNode.style.fontFamily = fontToApply;
   });
 };
 
@@ -71,3 +72,20 @@ observer.observe(document.body, config);
 
 //get activeFont from storage
 getActiveFont();
+const isFontAvailable = (fontFamily) => {
+  var testElement = document.createElement("span");
+  testElement.style.fontFamily = fontFamily;
+  testElement.style.fontSize = "100px";
+  testElement,
+    (textContent = ` ایک ٹیلے پر واقع مزار خواجہ فریدالدین گنج شکرؒ کے احاطہء صحن میں
+  ذرا سی ژالہ باری چاندی کے ڈھیروں کی مثل بڑے غضب کا نظارا دیتی ہے۔`);
+  document.body.appendChild(testElement);
+
+  var computedFontFamily = window.getComputedStyle(testElement).fontFamily;
+  //document.body.removeChild(testElement);
+  return computedFontFamily === fontFamily;
+};
+
+// Example usage
+var fontExists = isFontAvailable("gulzar");
+console.log("Gulzar font exists:", fontExists);
